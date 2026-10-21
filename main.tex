@@ -1,0 +1,88 @@
+% !TEX program = xelatex
+% =============================================================================
+% CHP SÖYLEM ANALİZİ RAPORU
+%
+% Derleme:  xelatex main.tex   (iki kez, içindekiler için)
+% ya da:    latexmk -xelatex main.tex
+% fontspec kullanıldığı için pdflatex ile derlenmez.
+% =============================================================================
+
+\documentclass[12pt,a4paper]{article}
+
+% --- kapak ve sayfa üstü bilgileri ------------------------------------------
+\newcommand{\reporttitle}{Hesaplamalı \\ Söylem Analizi Raporu}
+\newcommand{\reportsubtitle}{Cumhuriyet Halk Partisi Genel Başkan Konuşmaları, 2015--2026}
+\newcommand{\reportshorttitle}{CHP Söylem Analizi}
+\newcommand{\reportauthor}{Eren Işık Avcı}
+\newcommand{\reportdate}{\today}
+
+\usepackage{preamble}
+\usepackage{hyperref}
+\usepackage{threeparttable}
+
+\begin{document}
+
+% =============================================================================
+% BAŞLIK SAYFASI
+% =============================================================================
+\thispagestyle{empty}
+\vspace*{4cm}
+
+{\color{muted}\large \reportdate}
+
+\vspace{0.7em}
+{\fontsize{28}{32}\selectfont\bfseries \reporttitle\par}
+
+\vspace{0.5em}
+{\Large\color{muted} \reportsubtitle\par}
+
+\vspace{1.3em}
+{\color{ink}\rule{5cm}{2pt}}
+
+\vfill
+
+{\large\bfseries \reportauthor}\\[0.3em]
+{\color{muted}
+MSc Applied Social Data Science, London School of Economics\\
+\href{mailto:erenisikavci@gmail.com}{erenisikavci@gmail.com}
+}
+
+\vspace{2cm}
+
+% =============================================================================
+% İÇİNDEKİLER
+% =============================================================================
+\newpage
+\thispagestyle{empty}
+\tableofcontents
+
+% =============================================================================
+% ÖZET
+
+
+% =============================================================================
+% BÖLÜMLER
+% =============================================================================
+\newpage
+\setcounter{page}{1}
+
+\input{sections/00_özet}
+\input{sections/01_giriş}
+
+% --- kronolojik govde: her olay kendi bolumunde ---
+
+\input{sections/02_kapsam}
+\input{sections/03_ekonomik}
+\input{sections/04_kimlik}
+\input{sections/05_antagonist}
+
+% --- olaylar arasi duzenlilikler ---
+\input{sections/06_millet}
+\input{sections/07_sentez}
+\input{sections/08_adalet}
+
+\input{sections/09_erdoğan}
+\input{sections/10_oneriler}
+\input{sections/11_yontem}
+
+\end{document}

@@ -1,0 +1,141 @@
+% =============================================================================
+% preamble.sty -- rapor bicimi
+% XeLaTeX veya LuaLaTeX gerekir (fontspec).
+%
+% Tasarim ilkesi: duz beyaz sayfa. Ayirma isi zemin rengiyle degil
+% tipografiyle yapiliyor (agirlik, boyut, ince cizgi, bosluk).
+% =============================================================================
+
+\ProvidesPackage{preamble}
+
+% ---- dil ve sayfa ----------------------------------------------------------
+\RequirePackage{fontspec}
+\RequirePackage{polyglossia}
+\setmainlanguage{turkish}
+
+\RequirePackage[a4paper,
+                top=2.7cm, bottom=2.5cm,
+                left=2.7cm, right=2.7cm,
+                headsep=0.8cm, footskip=1.2cm]{geometry}
+
+% ---- renkler ---------------------------------------------------------------
+% Yalnizca gri tonlari. Metin siyah, cizgiler acik gri.
+\RequirePackage{xcolor}
+\definecolor{ink}  {HTML}{111111}   % ana metin
+\definecolor{muted}{HTML}{8A939C}   % ikincil metin, sayfa numarasi
+\definecolor{rule} {HTML}{DFE4E9}   % ince cizgi
+\definecolor{artis} {HTML}{1D4E89}   % artan  (mavi)
+\definecolor{azalis}{HTML}{9B2226}   % azalan (kirmizi)
+
+\color{ink}
+
+% ---- paketler --------------------------------------------------------------
+\RequirePackage{graphicx}
+% Figurler figures/ altinda. Boylece \includegraphics{ad.png} yeterli,
+% her seferinde klasor adi yazmaya gerek kalmiyor.
+\graphicspath{{figures/}}
+\RequirePackage{amssymb}   % \blacktriangle: tablo oklari
+\RequirePackage{float}      % [H]: tablo yazildigi yerde kalir
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{longtable}
+\RequirePackage{caption}
+\RequirePackage{enumitem}
+\RequirePackage{titlesec}
+\RequirePackage{fancyhdr}
+\RequirePackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.62em}
+\linespread{1.06}
+
+% ---- baslik bicimleri ------------------------------------------------------
+\titleformat{\section}
+  {\Large\bfseries}{\thesection.}{0.6em}{}
+  [\vspace{-0.5em}{\color{rule}\rule{\textwidth}{0.6pt}}]
+\titlespacing{\section}{0pt}{1.8em}{0.8em}
+
+\titleformat{\subsection}
+  {\large\bfseries}{\thesubsection}{0.6em}{}
+\titlespacing{\subsection}{0pt}{1.2em}{0.4em}
+
+% ---- sayfa basligi ---------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhead[L]{\footnotesize\color{muted}\reportshorttitle}
+\fancyhead[R]{\footnotesize\color{muted}\reportdate}
+\fancyfoot[C]{\footnotesize\color{muted}\thepage}
+
+% ---- icindekiler -----------------------------------------------------------
+\RequirePackage{titletoc}
+\renewcommand{\contentsname}{İçindekiler}
+\setcounter{tocdepth}{1}
+
+% ---- tablo ve sekil basliklari ---------------------------------------------
+\captionsetup{
+  font            = {small},
+  labelfont       = {bf},
+  labelsep        = period,
+  justification   = raggedright,
+  singlelinecheck = false,
+  skip            = 0.5em
+}
+\renewcommand{\arraystretch}{1.25}
+
+% =============================================================================
+% ORTAMLAR
+% =============================================================================
+
+% --- bulgu -------------------------------------------------------------------
+% Parametre BASLIK DEGIL, IDDIANIN KENDISI olmali.
+% "Ekonomik dil" degil, "Kriz aninda ekonomik dil kendiliginden cekiliyor".
+% Boylece icindekiler listesi bile argumani anlatir.
+%
+% Kullanim:
+%   \begin{bulgu}{Kriz aninda ekonomik dil kendiliginden cekiliyor}
+%     ... kanit ...
+%   \end{bulgu}
+\newcounter{bulgusayaci}
+\newenvironment{bulgu}[1]{%
+  \par\vspace{1.4em}%
+  \refstepcounter{bulgusayaci}%
+  {\footnotesize\bfseries\color{muted}BULGU \arabic{bulgusayaci}}\par
+  \vspace{0.1em}%
+  {\large\bfseries #1\par}
+  \addcontentsline{toc}{subsection}{\protect\numberline{}\textmd{#1}}%
+  \vspace{0.1em}{\color{rule}\rule{\textwidth}{0.6pt}}\par
+  \vspace{0.2em}%
+}{\par\vspace{0.4em}}
+
+% --- oneri -------------------------------------------------------------------
+% Her oneri bir bulguya baglanmali. Dayanaksiz oneri fikirdir, analiz degil.
+% Govde sola girintili, boylece bulgulardan gorsel olarak ayrilir.
+\newcounter{onerisayaci}
+\newenvironment{oneri}[1]{%
+  \par\vspace{1.2em}%
+  \stepcounter{onerisayaci}%
+  {\footnotesize\bfseries\color{muted}ÖNERİ \arabic{onerisayaci}}\par
+  \vspace{0.1em}%
+  {\bfseries #1\par}
+  \vspace{0.15em}%
+  \begin{list}{}{%
+    \setlength{\leftmargin}{1.3em}\setlength{\rightmargin}{0pt}%
+    \setlength{\topsep}{0.3em}\setlength{\parsep}{0.5em}%
+    \setlength{\itemindent}{0pt}\setlength{\listparindent}{0pt}}%
+  \item\relax
+}{\end{list}\par\vspace{0.2em}}
+
+% --- yardimci komutlar -------------------------------------------------------
+\newcommand{\sig}[1]{\textit{#1}}                    % gosterici
+\newcommand{\rakam}[2]{\textbf{#1}\,#2}              % metin ici vurgulu sayi
+% --- tablo oklari ---------------------------------------------------------
+% Rapor okuyucusu yuzdeyi degil yonu okuyor. Ok isaretin kendisi, yuzde
+% dogrulamasi.
+\newcommand{\artan}{\textcolor{artis}{$\blacktriangle$}}
+\newcommand{\azalan}{\textcolor{azalis}{$\blacktriangledown$}}
+\newcommand{\duraga}{\textcolor{muted}{--}}
+
+\newcommand{\kaynaknot}[1]{%                          % tablo/sekil alti not
+  \par\vspace{0.25em}{\footnotesize\color{muted}#1}}

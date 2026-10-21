@@ -1,0 +1,4 @@
+# data
+/data
+#pycache
+scripts\__pycache__
