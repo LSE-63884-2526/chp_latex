@@ -2,3 +2,9 @@
 /data
 #pycache
 scripts\__pycache__
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+__pycache__/
