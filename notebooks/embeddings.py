@@ -34,9 +34,15 @@ BLOCKERS = [
     r"\btbmm\b",
     r"türkiye büyük millet meclisi\w*",
     r"büyük millet meclisi\w*",
+    r"millet meclisi\w*",
     r"birleşmiş milletler\w*",
     r"\bbm\b",
     r"millet ittifakı\w*",
+    r"milletin meclisi\w*",
+    r"milletin vekili\w*",
+    r"bilal erdoğan\w*",
+    r"emine erdoğan\w*",
+    r"sümeyye erdoğan\w*",
 ]
 
 # =============================================================================
@@ -48,19 +54,20 @@ ET_RE = re.compile(r"^e[td]")
 
 # YENI: STYLE TOKENS (mask_style=True iken attention'dan ve ortalamadan dislanir)
 # Soru ekleri regex degil SET: "mi\w*" yazilsaydi "millet"i de yakalardi.
-Q_WORDS = {"niye", "neden", "niçin",
+Q_WORDS = {"niye", "neden", "niçin", "nere", "nereye", "nasıl", "ne", "neye", "neyi",
            "mı", "mi", "mu", "mü", "mısın", "misin", "musun", "müsün",
            "mıyız", "miyiz", "muyuz", "müyüz", "mısınız", "misiniz", "musunuz", "müsünüz"}
-SAY_RE = re.compile(r"^(diyor|diyen|vallah|billah|dedi(?!kodu)|dediler|demiş|söyl(?!em(?:ler\w*|i|in|ini|de|den|le)?$))\w*")
+SAY_RE = re.compile(r"^(hangi|diyor|diyen|vallah|billah|dedi(?!kodu)|dediler|demiş|söyl(?!em(?:ler\w*|i|in|ini|de|den|le)?$))\w*")
 SAY_EXACT = {"der", "derler"}
-VOCATIVE = {"sayın", "sevgili", "değerli", "kardeşim", "kardeşlerim", "bakın", "lazım",
+VOCATIVE = {"sayın", "sevgili", "değerli", "kardeşim", "kardeşlerim",
             "efendim", "arkadaşlar", "arkadaşlarım", "kardeşlerim", "kıymetli"}
 GREETINGS = {"merhaba", "selam", "selamlar", "selamlıyorum", "selamlarımla",
              "teşekkür", "teşekkürler","saygılar", "saygılarımla", "sunuyorum"}
+KK_STOP = {"bakın", "lazım"}
 
 def is_style(w):
     w = w.strip('.!?,;:"“”‘’\'()[]')
-    return w in Q_WORDS or w in SAY_EXACT or w in VOCATIVE or w in GREETINGS or bool(SAY_RE.match(w))
+    return w in Q_WORDS or w in SAY_EXACT or w in VOCATIVE or w in GREETINGS or w in KK_STOP or bool(SAY_RE.match(w))
 
 MATCHERS = {
     # millet (halk/ulus). milletvekili ve milletlerarasi HARIC (negatif lookahead).

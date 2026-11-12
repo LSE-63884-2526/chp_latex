@@ -1,5 +1,6 @@
 # data
 /data
+/embeddings
 #pycache
 scripts\__pycache__
 *.aux
