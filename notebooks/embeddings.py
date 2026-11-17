@@ -77,7 +77,7 @@ MATCHERS = {
     #   hakkari (sehir), hakem, hâkim/hakim (yargic), hakkında/hakkımda/hakkımızda/
     #   hakkınızda (about), haklarında (about them), hakikat (truth), hakaret (insult),
     #   haksiz (unfair), hakan (Hakan Fidan).
-    #"hak":        r"\bhak(?!kari|ir|em|kâri|im|kında|kımda|kımızda|kınızda|larında|ikat|aret|sız|an|lı|kaniyet|[-\s]?iş)\w*",
+    "hak":        r"\bhak(?!kari|ir|em|kâri|im|kında|kımda|kımızda|kınızda|larında|ikat|aret|sız|an|lı|kaniyet|[-\s]?iş)\w*",
 
     # halk (people). CHP parti adi BLOCKERS ile korunuyor (yukari bak).
     #"halk":       r"\bhalk\w*",

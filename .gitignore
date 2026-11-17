@@ -1,6 +1,7 @@
 # data
 /data
 /embeddings
+notebooks\signifier_analysis.py
 #pycache
 scripts\__pycache__
 *.aux
